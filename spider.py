@@ -1,4 +1,8 @@
+from firebase import firebase
 import scrapy
+
+db = firebase.FirebaseApplication('')
+data = db.get('/posts', None)
 
 class BlogSpider(scrapy.Spider):
     name = 'blogspider'
@@ -7,6 +11,17 @@ class BlogSpider(scrapy.Spider):
     def parse(self, response):
         for href in response.css("h1.title a::attr('href')"):
             url = response.urljoin(href.extract())
-            yield {'link': url}
-
             
+            if data is not None:
+              created = 0
+              for k in data:
+                if (type(data[k]) is dict):
+                  if url == data[k].get('link'):
+                    created = 1
+                    break
+                  else:
+                    created = 0
+
+              if created == 0:
+                result = db.post('/posts', {'link': url})
+                
