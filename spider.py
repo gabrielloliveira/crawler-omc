@@ -24,4 +24,6 @@ class BlogSpider(scrapy.Spider):
 
               if created == 0:
                 result = db.post('/posts', {'link': url})
+            else:
+              result = db.post('/posts', {'link': url})
                 

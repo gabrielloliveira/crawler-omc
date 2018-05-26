@@ -3,6 +3,7 @@
 
 # Requisitos:
 - Python 3.6
+- Database no Firebase
 
 # Instalação:
 - Clone o projeto ```git clone https://github.com/gabrielloliveira/crawler-omc.git```
@@ -10,5 +11,8 @@
 - Crie um virtualenv com o comando ```python3.6 -m venv env```
 - Ative o virtualenv: ```source env/bin/activate```
 - Instale as dependências: ```pip install -r requeriments.txt```
-- Rode a aranha. Para facilitar a visualização, rode o comando ```scrapy runspider spider.py -o data.json```
-- Acesse o arquivo data.json
+- Adicione a url da aplicação firebase no arquivo ```spider.py```
+
+# Execução:
+- Rode a aranha. ```scrapy runspider spider.py```
+- Veja no console do firebase os posts salvos.
