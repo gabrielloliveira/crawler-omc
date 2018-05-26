@@ -26,12 +26,13 @@ class BlogSpider(scrapy.Spider):
                 if created == 0:
                     result = db.post('/posts', {'link': url})
 
-                    requisicao = "https://api.telegram.org/bot{}/sendMessage?chat_id={}&text=Novo+post:{}".format(
-                        "TOKEN", 
-                        ID_CHANNEL,
-                        url)
+                    # Enviando mensagem via API do telegram
+                    # requisicao = "https://api.telegram.org/bot{}/sendMessage?chat_id={}&text=Novo+post:{}".format(
+                    #     "TOKEN", 
+                    #     ID_CHANNEL,
+                    #     url)
 
-                    requests.get(requisicao) 
+                    # requests.get(requisicao) 
                     
             else:
                 result = db.post('/posts', {'link': url})
