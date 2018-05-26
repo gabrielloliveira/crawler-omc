@@ -1,5 +1,6 @@
 from firebase import firebase
 import scrapy
+import requests
 
 db = firebase.FirebaseApplication('')
 data = db.get('/posts', None)
@@ -13,17 +14,25 @@ class BlogSpider(scrapy.Spider):
             url = response.urljoin(href.extract())
             
             if data is not None:
-              created = 0
-              for k in data:
-                if (type(data[k]) is dict):
-                  if url == data[k].get('link'):
-                    created = 1
-                    break
-                  else:
-                    created = 0
+                created = 0
+                for k in data:
+                    if (type(data[k]) is dict):
+                        if url == data[k].get('link'):
+                            created = 1
+                            break
+                        else:
+                            created = 0
 
-              if created == 0:
-                result = db.post('/posts', {'link': url})
+                if created == 0:
+                    result = db.post('/posts', {'link': url})
+
+                    requisicao = "https://api.telegram.org/bot{}/sendMessage?chat_id={}&text=Novo+post:{}".format(
+                        "TOKEN", 
+                        ID_CHANNEL,
+                        url)
+
+                    requests.get(requisicao) 
+                    
             else:
-              result = db.post('/posts', {'link': url})
+                result = db.post('/posts', {'link': url})
                 
